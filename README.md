@@ -22,4 +22,4 @@ streamlit run app.py
 Now you're all set to use Studybuddy v0.1 locally! Access the app through your browser at the provided URL (usually `http://localhost:8501`).
 
 ---
-This project was inspired by Alejandro AO tutorial: https://youtu.be/dXxQ0LR-3Hg?si=o-zDdaTWjhwymIva
+This project is based on Alejandro AO his tutorial: https://youtu.be/dXxQ0LR-3Hg?si=o-zDdaTWjhwymIva
