@@ -14,8 +14,16 @@ css = '''
   height: 78px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.bot-avatar {
   background-color: purple;
 }
+
+.user-avatar {
+  background-color: green;
+}
+
 .chat-message .message {
   width: 80%;
   padding: 0 1.5rem;
@@ -25,8 +33,16 @@ css = '''
 
 bot_template = '''
 <div class="chat-message bot">
-    <div class="avatar">
+    <div class="bot-avatar">
     </div>
+    <div class="message">{{MSG}}</div>
+</div>
+'''
+
+user_template = '''
+<div class="chat-message user">
+    <div class="user-avatar">
+    </div>    
     <div class="message">{{MSG}}</div>
 </div>
 '''
