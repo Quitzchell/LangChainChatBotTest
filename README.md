@@ -1,4 +1,4 @@
-# Studybuddy v0.1 Setup Tutorial
+# Studybuddy v0.1 local setup tutorial
 
 Follow these steps to set up and run Studybuddy v0.1 on your local environment:
 
