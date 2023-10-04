@@ -72,7 +72,7 @@ def main():
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = None
 
-    st.header(":robot_face: Pretty dumb studybuddy v0.1 :robot_face:")
+    st.header(":robot_face: LLM Sandbox :robot_face:")
     user_question = st.text_input("Ask me a question about your documents")
     if user_question:
         handle_user_question(user_question)
