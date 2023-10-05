@@ -23,3 +23,13 @@ Now you're all set to use Studybuddy v0.1 locally! Access the app through your b
 
 ---
 This project is based on Alejandro AO his tutorial: https://youtu.be/dXxQ0LR-3Hg?si=o-zDdaTWjhwymIva
+
+
+## BenchMarking
+
+question: "What is the title?"
+- OpenAI: "The title of the text is "HBO-i-domeinbeschrijving 2018" -> 2.16 seconds
+- HuggingFaceApi:
+# with GPU Numba package on AMD Radeon RX 5700 XT
+- Local orca-mini
+- Local wizard-lm:
