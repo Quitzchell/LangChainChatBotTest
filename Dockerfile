@@ -13,11 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the local application code to the container
 COPY . /app
 
-# Install dependencies
-RUN pip install -r requirements.txt
-
-# Expose the port that Streamlit runs on
-EXPOSE 8501
+## Expose the port that Streamlit runs on
+#EXPOSE 8501
 
 # Command to run the Streamlit app
-CMD ["streamlit", "run", "./src/app.py"]
+#CMD ["python", "./src/app.py"]

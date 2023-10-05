@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: chatbot-sandbox
-    ports:
-      - "8501:8501"
+#    ports:
+#      - "8501:8501"
     volumes:
       - .:/app

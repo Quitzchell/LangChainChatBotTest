@@ -1,99 +1,80 @@
-import streamlit as st
-from dotenv import load_dotenv
-from PyPDF2 import PdfReader
-from langchain.llms import HuggingFaceHub
+import os
+import time
+
+from langchain.chat_models import ChatOpenAI
+from langchain.embeddings import OpenAIEmbeddings
+from langchain import HuggingFaceHub
+from langchain.chains import RetrievalQA
+from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.embeddings import HuggingFaceInstructEmbeddings
 from langchain.vectorstores import FAISS
-from langchain.memory import ConversationBufferMemory
-from langchain.chains import ConversationalRetrievalChain
-from htmlTemplate import css, bot_template, user_template
+from langchain.document_loaders import PyPDFLoader
+from langchain.llms import GPT4All
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+#### steps console
+# 1. select llm -> when openai , choose openai embeddings and vectorstore
+# 2. when other llm ->
+
+# Set API keys
+hugging_face_hub_api_key = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+openai_key = os.getenv("OPENAI_API_KEY")
+
+# Create the texts for vectorstore (already in chunks)
+loader = PyPDFLoader("docs/pdfs/hboi_framework.pdf")
+# pdf = loader.load()
+
+# Split document in chunks
+# text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=30, separator="\n")
+# split_pdf = text_splitter.split_documents(documents=pdf)
+
+# # OpenAI API LLM
+llm = ChatOpenAI(api_key=openai_key, model_name="gpt-3.5-turbo", temperature=0.5) # very fast!
+
+# # HuggingFace Hub LLM -> only text2text and summarisation models
+# llm = HuggingFaceHub(repo_id="bofenghuang/vigo-mistral-7b-chat") # fast, but not working with vectorstore
+# llm = HuggingFaceHub(repo_id="lmsys/fastchat-t5-3b-v1.0") # fast, but not working with vectorstore
+
+# Local LLMS:  work very slow on cpu, need gpu to speed up
+# llm = GPT4All(model="D:/Programmeren/Pycharm/LLMS/wizardlm-13b-v1.1-superhot-8k.ggmlv3.q4_0.bin", verbose=True)
+# llm = GPT4All(model="D:/Programmeren/Pycharm/LLMS/orca-mini-3b.ggmlv3.q4_0.bin", verbose=True) # more lightweight, but still slow
+# llm = GPT4All(model="D:/Programmeren/Pycharm/LLMS/ggml-model-gpt4all-falcon-q4_0.bin", verbose=True)  # more lightweight, but still slow
+# uses lots of cpu and memory
+
+# # Create the embeddings
+# embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+embeddings = OpenAIEmbeddings()
+
+# # Create the vectorstore
+# vectorstore = FAISS.from_documents(split_pdf, embedding=embeddings)
+# vectorstore.save_local("../docs/vectorstores/openai_hboi_vectorstore")  # when saving new vectorstore
+# vectorstore = FAISS.load_local(folder_path="../docs/vectorstores/hboi_framework_vectorstore", embeddings=embeddings)
 
 
-def get_pdf_text(pdf_docs):
-    text = ""
-    for pdf in pdf_docs:
-        pdf_reader = PdfReader(pdf)
-        for page in pdf_reader.pages:
-            text += page.extract_text()
-    return text
+vectorstore = FAISS.load_local(folder_path="docs/vectorstores/openai_hboi_vectorstore", embeddings=embeddings) # need openai embeddings!
+# vectorstore = FAISS.load_local(folder_path="../docs/vectorstores/hboi_framework_vectorstore",
+#                                embeddings=embeddings)  # need openai embeddings!
 
 
-def get_text_chunks(raw_text):
-    text_splitter = CharacterTextSplitter(
-        separator="\n",
-        chunk_size=1000,
-        chunk_overlap=200,
-        length_function=len
-    )
-    chunks = text_splitter.split_text(raw_text)
-    return chunks
+def ask_question(query):
+    start_time = time.time()
+    qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=vectorstore.as_retriever())
+    result = qa.run(query)
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(f"Elapsed time: {elapsed_time}")
+    print(result)
 
 
-def get_vectorstore(text_chunks):
-    embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-xl")
-    vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
-    return vectorstore
-
-
-def get_conversation(vectorstore):
-    llm = HuggingFaceHub(repo_id="google/flan-t5-xxl", model_kwargs={"temperature": 0.5, "max_length": 512})
-    memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
-    conversation_chain = ConversationalRetrievalChain.from_llm(
-        llm=llm,
-        retriever=vectorstore.as_retriever(),
-        memory=memory
-    )
-    return conversation_chain
-
-
-def handle_user_question(user_question):
-    response = st.session_state.conversation({'question': user_question})
-    st.session_state.chat_history = response['chat_history']
-
-    for i, message in enumerate(st.session_state.chat_history):
-        if i % 2 == 0:
-            st.write(user_template.replace(
-                "{{MSG}}", message.content), unsafe_allow_html=True)
-        else:
-            st.write(bot_template.replace(
-                "{{MSG}}", message.content), unsafe_allow_html=True)
-
-
-# Application starts here!
 def main():
-    load_dotenv()
-    st.set_page_config(page_title="Chatbot that reads PDFs", page_icon=":eyes:")
-
-    st.write(css, unsafe_allow_html=True)
-
-    if "conversation" not in st.session_state:
-        st.session_state.conversation = None
-    if "chat_history" not in st.session_state:
-        st.session_state.chat_history = None
-
-    st.header(":robot_face: LLM Sandbox :robot_face:")
-    user_question = st.text_input("Ask me a question about your documents")
-    if user_question:
-        handle_user_question(user_question)
-
-    with st.sidebar:
-        st.subheader("Documents")
-        pdf_docs = st.file_uploader("Upload your document(s) here", accept_multiple_files=True)
-        if st.button("Process"):
-            with st.spinner("Processing"):
-                # get raw pdf text
-                raw_text = get_pdf_text(pdf_docs)
-
-                # split the raw_text into chunks
-                text_chunks = get_text_chunks(raw_text)
-
-                #  create vector store
-                vectorstore = get_vectorstore(text_chunks)
-
-                # conversation chain
-                st.session_state.conversation = get_conversation(vectorstore)
+    query = input("Type in your query: \n")
+    while query != "exit":
+        ask_question(query)
+        query = input("Type in your query: \n")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
