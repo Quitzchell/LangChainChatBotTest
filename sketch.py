@@ -21,21 +21,21 @@ load_dotenv()
 
 # Set API keys
 hugging_face_hub_api_key = os.getenv("HUGGINGFACEHUB_API_TOKEN")
-openai_key = os.getenv("OPENAI_API_KEY")
+# openai_key = os.getenv("OPENAI_API_KEY")
 
 # Create the texts for vectorstore (already in chunks)
 loader = PyPDFLoader("docs/pdfs/hboi_framework.pdf")
-# pdf = loader.load()
+pdf = loader.load()
 
 # Split document in chunks
-# text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=30, separator="\n")
-# split_pdf = text_splitter.split_documents(documents=pdf)
+text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=30, separator="\n")
+split_pdf = text_splitter.split_documents(documents=pdf)
 
 # # OpenAI API LLM
-llm = ChatOpenAI(api_key=openai_key, model_name="gpt-3.5-turbo", temperature=0.5) # very fast!
+# llm = ChatOpenAI(api_key=openai_key, model_name="gpt-3.5-turbo", temperature=0.5) # very fast!
 
 # # HuggingFace Hub LLM -> only text2text and summarisation models
-# llm = HuggingFaceHub(repo_id="bofenghuang/vigo-mistral-7b-chat") # fast, but not working with vectorstore
+llm = HuggingFaceHub(repo_id="bofenghuang/vigo-mistral-7b-chat") # fast, but not working with vectorstore
 # llm = HuggingFaceHub(repo_id="lmsys/fastchat-t5-3b-v1.0") # fast, but not working with vectorstore
 
 # Local LLMS:  work very slow on cpu, need gpu to speed up
@@ -45,13 +45,13 @@ llm = ChatOpenAI(api_key=openai_key, model_name="gpt-3.5-turbo", temperature=0.5
 # uses lots of cpu and memory
 
 # # Create the embeddings
-# embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-embeddings = OpenAIEmbeddings()
+embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+# embeddings = OpenAIEmbeddings()
 
 # # Create the vectorstore
-# vectorstore = FAISS.from_documents(split_pdf, embedding=embeddings)
-# vectorstore.save_local("../docs/vectorstores/openai_hboi_vectorstore")  # when saving new vectorstore
-# vectorstore = FAISS.load_local(folder_path="../docs/vectorstores/hboi_framework_vectorstore", embeddings=embeddings)
+vectorstore = FAISS.from_documents(split_pdf, embedding=embeddings)
+vectorstore.save_local("docs/vectorstores/openai_hboi_vectorstore")  # when saving new vectorstore
+# vectorstore = FAISS.load_local(folder_path="docs/vectorstores/hboi_framework_vectorstore", embeddings=embeddings)
 
 
 vectorstore = FAISS.load_local(folder_path="docs/vectorstores/openai_hboi_vectorstore", embeddings=embeddings) # need openai embeddings!

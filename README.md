@@ -20,7 +20,7 @@ pip install -r requirements.txt
    - Run the following command in your terminal to start the Studybuddy project.
 
 ```bash
-streamlit run app.py
+streamlit run sketch.py
 ```
 
 Now you're all set to use chatbot sandbox locally! Access the app through your browser at the provided URL (usually `http://localhost:8501`).
