@@ -30,21 +30,21 @@ text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=30, separat
 split_pdf = text_splitter.split_documents(documents=pdf)
 
 # # OpenAI API LLM
-# llm = ChatOpenAI(api_key=openai_key, model_name="gpt-3.5-turbo", temperature=0.5) # very fast!
+llm = ChatOpenAI(api_key=openai_key, model_name="gpt-3.5-turbo", temperature=0.5) # very fast!
 
 # # HuggingFace Hub LLM -> only text2text and summarisation models
 # llm = HuggingFaceHub(repo_id="bofenghuang/vigo-mistral-7b-chat") # fast, but not working with vectorstore
 # llm = HuggingFaceHub(repo_id="lmsys/fastchat-t5-3b-v1.0") # fast, but not working with vectorstore
 
 # Local LLMS:  work very slow on cpu, need gpu to speed up
-llm = GPT4All(model="D:/Programmeren/Pycharm/LLMS/wizardlm-13b-v1.1-superhot-8k.ggmlv3.q4_0.bin", verbose=True)
+# llm = GPT4All(model="D:/Programmeren/Pycharm/LLMS/wizardlm-13b-v1.1-superhot-8k.ggmlv3.q4_0.bin", verbose=True)
 # llm = GPT4All(model="D:/Programmeren/Pycharm/LLMS/orca-mini-3b.ggmlv3.q4_0.bin", verbose=True) # more lightweight, but still slow
 # llm = GPT4All(model="D:/Programmeren/Pycharm/LLMS/ggml-model-gpt4all-falcon-q4_0.bin", verbose=True)  # more lightweight, but still slow
 # uses lots of cpu and memory
 
 # # Create the embeddings
-embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-# embeddings = OpenAIEmbeddings()
+# embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+embeddings = OpenAIEmbeddings()
 
 # # Create the vectorstore
 # vectorstore = FAISS.from_documents(split_pdf, embedding=embeddings)
@@ -52,9 +52,9 @@ embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 # vectorstore = FAISS.load_local(folder_path="../docs/vectorstores/hboi_framework_vectorstore", embeddings=embeddings)
 
 
-# vectorstore = FAISS.load_local(folder_path="../docs/vectorstores/openai_hboi_vectorstore", embeddings=embeddings) # need openai embeddings!
-vectorstore = FAISS.load_local(folder_path="../docs/vectorstores/hboi_framework_vectorstore",
-                               embeddings=embeddings)  # need openai embeddings!
+vectorstore = FAISS.load_local(folder_path="../docs/vectorstores/openai_hboi_vectorstore", embeddings=embeddings) # need openai embeddings!
+# vectorstore = FAISS.load_local(folder_path="../docs/vectorstores/hboi_framework_vectorstore",
+#                                embeddings=embeddings)  # need openai embeddings!
 
 
 def ask_question(query):
