@@ -25,7 +25,7 @@ class ChatbotFactory:
         # Create vector store instance
         vector_store = VectorStore(
             texts=chunks,
-            embeddings=embeddings.get_embedding
+            embeddings=embeddings.get_embedding()
         )
 
         # Create language model instance
