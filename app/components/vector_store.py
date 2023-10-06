@@ -2,18 +2,16 @@ from langchain.vectorstores import FAISS
 
 
 class VectorStore:
-    def __init__(self, vector_store_type, path):
-        if vector_store_type == "FAISS":
-            self.vectorstore = FAISS(path)
-        # Initialize the vector store based on the provided type and path
-        # For example, initialize FAISS or connect to a database
+    def __init__(self, texts: list[str], embeddings):
+        self.vectorstore = FAISS.from_texts(texts=texts, embedding=embeddings)
 
     """Add a vector representation for a given text"""
     def add_vector(self, text, vector):
-        self.vectorstore.add_vector(text, vector)
+        pass
 
     """Get the vector representation for a given text"""
     def get_vector(self, text):
-        return self.vectorstore.get_vector(text)
+        pass
 
-        # Additional methods to handle vector store-related operations could be added here
+    def as_retriever(self):
+        return self.as_retriever()
