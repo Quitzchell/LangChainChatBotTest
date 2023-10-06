@@ -54,7 +54,7 @@ vectorstore.save_local("docs/vectorstores/openai_hboi_vectorstore")  # when savi
 # vectorstore = FAISS.load_local(folder_path="docs/vectorstores/hboi_framework_vectorstore", embeddings=embeddings)
 
 
-vectorstore = FAISS.load_local(folder_path="docs/vectorstores/openai_hboi_vectorstore", embeddings=embeddings) # need openai embeddings!
+# vectorstore = FAISS.load_local(folder_path="docs/vectorstores/openai_hboi_vectorstore", embeddings=embeddings) # need openai embeddings!
 # vectorstore = FAISS.load_local(folder_path="../docs/vectorstores/hboi_framework_vectorstore",
 #                                embeddings=embeddings)  # need openai embeddings!
 
