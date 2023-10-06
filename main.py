@@ -1,27 +1,28 @@
-import time
-import json
+import os
+
+from dotenv import load_dotenv
 
 from app.factories.chatbot_factory import ChatbotFactory
 
 if __name__ == "__main__":
-    # todo: find a way to keep the application running so docker won't exit
-    #   jargon: lifecycle / supervisord
+    load_dotenv()
     while True:
-        # Your application logic here
-        print("Running...")
+        # todo: create component that let users select which chatbot they want to use for benchmarking
+        # Load the chatbot configuration
+        selected_bot = 'flan_t5-xxl_instructor-xl_faiss.json'
+        script_dir = os.path.dirname(__file__)
+        config_path = os.path.join(script_dir, 'app', 'configs', selected_bot)
 
-        time.sleep(10)  # Adjust the sleep time as needed
+        # Create the chatbot
+        chatbot_factory = ChatbotFactory()
+        chatbot = chatbot_factory.create_chatbot(config_path=config_path)
 
-    # chatbot_factory = ChatbotFactory()
-    #
-    # # todo: create console application in which the user
-    # #   can select a prepared app configuration
-    #
-    # # todo: use the selected option to call a create_chatbot that
-    # #   creates the prepared app configuration
-    # app = chatbot_factory.create_chatbot() # this is just an example
-    #
-    # # Now you can use the app to answer questions
-    # question = input("Type your question: ")
-    # answer = app.answer_question(question)
-    # print("Chatbot's Answer:", answer)
+        # Ask for a question
+        question = input("Type your question (type 'exit' to quit): ")
+
+        if question.lower() == 'exit':
+            break
+
+        # Get the chatbot's answer
+        answer = chatbot.answer_question(question)
+        print("Chatbot's Answer:", answer)

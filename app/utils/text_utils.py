@@ -7,11 +7,11 @@ class TextExtractor:
     def extract_text_from_pdf(pdf_path):
         text = ""
         with open(pdf_path, "rb") as pdf_file:
-            pdf_reader = PyPDF2.PdfFileReader(pdf_file)
-            for page_num in range(pdf_reader.numPages):
-                page = pdf_reader.getPage(page_num)
+            pdf_reader = PyPDF2.PdfReader(pdf_file)
+            for page_num in range(len(pdf_reader.pages)):
+                page = pdf_reader.pages[page_num]
                 text += page.extract_text()
-        return text
+            return text
 
     @staticmethod
     def chunk_text(raw_text):
