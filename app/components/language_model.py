@@ -1,6 +1,7 @@
 from langchain.llms import HuggingFaceHub
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
+from app.components.vector_store import VectorStore
 
 
 class LanguageModel:
@@ -9,7 +10,8 @@ class LanguageModel:
         self.api_key = api_key
 
     """Generate a response given the context and a user question."""
-    def generate_response(self, vectorstore):
+
+    def generate_response(self, question: str, vectorstore: VectorStore):
         memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
 
         conversation_chain = ConversationalRetrievalChain.from_llm(
@@ -17,4 +19,9 @@ class LanguageModel:
             retriever=vectorstore.as_retriever(),
             memory=memory
         )
-        return conversation_chain
+
+        # todo: fix token error
+        #   ValueError: Error raised by inference API: Input validation error: `inputs` must have less than 1024 tokens. Given: 1532
+        response = conversation_chain({'question': question})
+
+        return response

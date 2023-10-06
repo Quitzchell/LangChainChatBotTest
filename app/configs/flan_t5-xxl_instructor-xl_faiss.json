@@ -8,6 +8,7 @@
   },
   "vector_store": {
     "type": "FAISS",
-    "path": "docs/pdfs/hboi_framework.pdf"
+    "file_path": "docs/pdfs/HBOI-kpi.pdf",
+    "vector_path": "docs/vectorstores/hboi_framework_vectorstore"
   }
 }

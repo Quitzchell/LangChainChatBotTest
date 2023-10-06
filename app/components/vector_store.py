@@ -2,7 +2,8 @@ from langchain.vectorstores import FAISS
 
 
 class VectorStore:
-    def __init__(self, texts: list[str], embeddings):
+    def __init__(self, texts: list[str], path: str, embeddings):
+        # self.vectorstore = FAISS.load_local(folder_path=path, embeddings=embeddings)
         self.vectorstore = FAISS.from_texts(texts=texts, embedding=embeddings)
 
     """Add a vector representation for a given text"""
@@ -14,4 +15,4 @@ class VectorStore:
         pass
 
     def as_retriever(self):
-        return self.as_retriever()
+        return self.vectorstore.as_retriever()

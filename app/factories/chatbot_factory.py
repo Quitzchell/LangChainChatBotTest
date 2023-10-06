@@ -19,12 +19,15 @@ class ChatbotFactory:
         )
 
         # Create document for vector store
-        raw_text = TextExtractor.extract_text_from_pdf(pdf_path=config["vector_store"]["path"])
+        raw_text = TextExtractor.extract_text_from_pdf(pdf_path=config["vector_store"]["file_path"])
         chunks = TextExtractor.chunk_text(raw_text=raw_text)
+
+        vector_path = config["vector_store"]["vector_path"]
 
         # Create vector store instance
         vector_store = VectorStore(
             texts=chunks,
+            path=vector_path,
             embeddings=embeddings.get_embedding()
         )
 

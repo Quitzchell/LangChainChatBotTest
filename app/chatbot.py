@@ -12,13 +12,13 @@ class Chatbot:
 
     def answer_question(self, question):
         # Logic to answer a question using the language model and vector store
-        response = self.language_model.generate_response(vectorstore=self.vector_store)
+        response = self.language_model.generate_response(question=question, vectorstore=self.vector_store)
+        self.context = response['chat_history']
 
         # Add chat history to context
-        self.context['chat_history'].append(response['chat_history'])
+        # self.context['chat_history'].append(response['chat_history'])
 
-        print(response)
 
         # Process the response and return an answer
         # Modify this part based on how you handle the response
-        return response
+        return response['answer']
