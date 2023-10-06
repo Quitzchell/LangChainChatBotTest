@@ -8,6 +8,6 @@
   },
   "vector_store": {
     "type": "FAISS",
-    "path": "docs/vectorstores/openai_hboi_vectorstore"
+    "path": "docs/pdfs/hboi_framework.pdf"
   }
 }
