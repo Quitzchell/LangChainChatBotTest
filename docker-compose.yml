@@ -1,0 +1,11 @@
+version: '3'
+services:
+  chatbot-sandbox:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-sandbox
+    environment:
+      - HUGGINGFACEHUB_API_TOKEN=${HUGGINGFACEHUB_API_TOKEN}
+    volumes:
+      - .:/app
