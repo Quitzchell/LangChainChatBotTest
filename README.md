@@ -1,5 +1,5 @@
 # Chatbox Sandbox local setup tutorial
-### ***note: this project is still very work in progress***
+### ***note: this project is still a work in progress***
 
 ---
 #### Follow these steps to set up and run the chatbot sandbox on your local environment using Docker Desktop:
