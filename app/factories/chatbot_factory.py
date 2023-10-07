@@ -1,10 +1,9 @@
 import json
 
 from app.chatbot import Chatbot
-from app.components.embeddings import Embeddings
-from app.components.language_model import LanguageModel
-from app.components.vector_store import VectorStore
-from app.utils.text_utils import TextExtractor
+from app.utils.embedding_selector import EmbeddingsSelector
+from app.utils.language_model_selector import LanguageModelSelector
+from app.utils.vectorstore_selector import VectorStoreSelector
 
 
 class ChatbotFactory:
@@ -14,27 +13,27 @@ class ChatbotFactory:
             config = json.load(file)
 
         # Create embeddings
-        embeddings = Embeddings(
-            model_name=config['embeddings']['model_name']
-        )
+        embeddings_strategy = config['embeddings']['strategy']
+        embeddings_class = EmbeddingsSelector().get_embeddings_class(embeddings_strategy)
+        embeddings = embeddings_class(model_name=config['embeddings']['model_name'])
 
-        # Create document for vector store
-        raw_text = TextExtractor.extract_text_from_pdf(pdf_path=config["vector_store"]["file_path"])
-        chunks = TextExtractor.chunk_text(raw_text=raw_text)
+        # Create vector store
+        if 'vector_path' in config:
+            path = config['vector_store']['vector_path']
+            vector_store_strategy = config['vector_store']['local_strategy']
+        else:
+            path = config['vector_store']['pdf_path']
+            vector_store_strategy = config['vector_store']['pdf_strategy']
 
-        vector_path = config["vector_store"]["vector_path"]
-
-        # Create vector store instance
-        vector_store = VectorStore(
-            texts=chunks,
-            path=vector_path,
+        vector_store_class = VectorStoreSelector().get_vectorstore(vector_store_strategy)
+        vector_store = vector_store_class(
+            path=path,
             embeddings=embeddings.get_embedding()
         )
 
-        # Create language model instance
-        language_model = LanguageModel(
-            model_name=config["language_model"]["model_name"],
-            api_key=config["language_model"]["api_key"],
-        )
+        # Create language model
+        language_model_strategy = config['language_model']['strategy']
+        language_model_class = LanguageModelSelector().get_language_model_class(language_model_strategy)
+        language_model = language_model_class(model_name=config['language_model']['model_name'])
 
         return Chatbot(language_model, embeddings, vector_store)

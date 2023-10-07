@@ -1,10 +1,10 @@
-from app.components.embeddings import Embeddings
-from app.components.language_model import LanguageModel
-from app.components.vector_store import VectorStore
+from app.components.embeddings.abstract.embeddings import Embeddings
+from app.components.language_models.huggingface_hub_language_model_strategy import HuggingFaceHubLanguageModelStrategy
+from app.components.vectorstores.faiss_from_text_vectorstore_strategy import VectorStore
 
 
 class Chatbot:
-    def __init__(self, language_model: LanguageModel, embeddings: Embeddings, vector_store: VectorStore):
+    def __init__(self, language_model: HuggingFaceHubLanguageModelStrategy, embeddings: Embeddings, vector_store: VectorStore):
         self.language_model = language_model
         self.embeddings = embeddings
         self.vector_store = vector_store

@@ -8,6 +8,7 @@ if __name__ == "__main__":
     load_dotenv()
     chatbot = None
 
+    # todo: research how to handle lifecycle in a docker container
     while True:
         if not chatbot:
             # todo: create component that let users select which chatbot they want to use for benchmarking
