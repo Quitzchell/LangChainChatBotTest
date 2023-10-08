@@ -7,5 +7,9 @@ services:
     container_name: app-sandbox
     environment:
       - HUGGINGFACEHUB_API_TOKEN=${HUGGINGFACEHUB_API_TOKEN}
+    deploy:
+      resources:
+        limits:
+          memory: 8g
     volumes:
       - .:/app
