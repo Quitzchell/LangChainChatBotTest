@@ -3,7 +3,7 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 
 from app.components.language_models.abstract.language_model import LanguageModel
-from app.components.vectorstores.faiss_from_text_vectorstore_strategy import VectorStore
+from app.components.vectorstores.faiss_from_text_strategy import VectorStore
 
 
 class HuggingFaceHubLanguageModelStrategy(LanguageModel):
