@@ -18,8 +18,7 @@ if __name__ == "__main__":
             config_path = os.path.join(script_dir, 'app', 'configs', selected_bot)
 
             # Create the chatbot
-            chatbot_factory = ChatbotFactory()
-            chatbot = chatbot_factory.create_chatbot(config_path=config_path)
+            ChatbotFactory().create_chatbot(config_path=config_path)
 
         # Ask for a question
         question = input("Type your question (type 'exit' to quit): ")
