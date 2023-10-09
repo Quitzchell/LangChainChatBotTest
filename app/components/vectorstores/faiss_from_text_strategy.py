@@ -4,7 +4,7 @@ from app.components.vectorstores.abstract.vectorStore import VectorStore
 from app.utils.text_utils import TextExtractor
 
 
-class FaissFromTextVectorStoreStrategy(VectorStore):
+class FaissFromTextStrategy(VectorStore):
     def __init__(self, path: str, embeddings):
         raw_text = TextExtractor.extract_text_from_pdf(pdf_path=path)
         chunks = TextExtractor.chunk_text(raw_text=raw_text)
