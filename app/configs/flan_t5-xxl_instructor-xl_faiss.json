@@ -9,7 +9,7 @@
   },
   "vector_store": {
     "type": "FAISS",
-    "pdf_path": "docs/pdfs/hboi_framework.pdf",
+    "pdf_path": "docs/pdfs/hboi_kpi.pdf",
     "pdf_strategy": "FaissFromTextStrategy"
   }
 }

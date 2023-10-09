@@ -1,14 +1,14 @@
-from langchain.llms import HuggingFaceHub
+from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 
 from app.components.language_models.abstract.language_model import LanguageModel
-from app.components.vectorstores.faiss_from_text_strategy import VectorStore
+from app.components.vectorstores.faiss_load_local_strategy import VectorStore
 
 
-class HuggingFaceHubLanguageModelStrategy(LanguageModel):
-    def __init__(self, model_name: str):
-        self.llm = HuggingFaceHub(repo_id=model_name, model_kwargs={"temperature": 0.5, "max_length": 512})
+class OpenAiLanguageModel(LanguageModel):
+    def __init__(self, model_name: str, openai_key: int):
+        self.llm = ChatOpenAI(api_key=openai_key, repo_id=model_name, model_kwargs={"temperature": 0.5})
 
     """Generate a response given the context and a user question."""
     def generate_response(self, question: str, vector_store: VectorStore):

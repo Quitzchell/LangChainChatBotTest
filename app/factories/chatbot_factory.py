@@ -1,23 +1,33 @@
 import json
 
 from app.chatbot import Chatbot
+from app.components.embeddings.abstract.embeddings import Embeddings
+from app.components.language_models.abstract.language_model import LanguageModel
+from app.components.vectorstores.abstract.vectorStore import VectorStore
 from app.utils.embedding_selector import EmbeddingsSelector
 from app.utils.language_model_selector import LanguageModelSelector
 from app.utils.vectorstore_selector import VectorStoreSelector
 
 
 class ChatbotFactory:
-    @staticmethod
-    def create_chatbot(config_path: str):
-        with open(config_path, 'r') as file:
-            config = json.load(file)
+    def create_chatbot(self, config_path: str) -> Chatbot:
+        config = self.load_config(config_path)
+        embeddings = self.create_embeddings(config)
+        vector_store = self.create_vector_store(config, embeddings)
+        language_model = self.create_language_model(config)
 
-        # Create embeddings
+        return Chatbot(language_model, embeddings, vector_store)
+
+    def load_config(self, config_path: str):
+        with open(config_path, 'r') as file:
+            return json.load(file)
+
+    def create_embeddings(self, config) -> Embeddings:
         embeddings_strategy = config['embeddings']['strategy']
         embeddings_class = EmbeddingsSelector().get_embeddings_class(embeddings_strategy)
-        embeddings = embeddings_class(model_name=config['embeddings']['model_name'])
+        return embeddings_class(model_name=config['embeddings']['model_name'])
 
-        # Create vector store
+    def create_vector_store(self, config, embeddings) -> VectorStore:
         if 'local_path' in config:
             path = config['vector_store']['local_path']
             vector_store_strategy = config['vector_store']['local_strategy']
@@ -26,14 +36,10 @@ class ChatbotFactory:
             vector_store_strategy = config['vector_store']['pdf_strategy']
 
         vector_store_class = VectorStoreSelector().get_vectorstore(vector_store_strategy)
-        vector_store = vector_store_class(
-            path=path,
-            embeddings=embeddings.get_embedding()
-        )
+        return vector_store_class(path=path, embeddings=embeddings.get_embedding())
 
-        # Create language model
+    def create_language_model(self, config) -> LanguageModel:
         language_model_strategy = config['language_model']['strategy']
         language_model_class = LanguageModelSelector().get_language_model_class(language_model_strategy)
-        language_model = language_model_class(model_name=config['language_model']['model_name'])
+        return language_model_class(model_name=config['language_model']['model_name'])
 
-        return Chatbot(language_model, embeddings, vector_store)

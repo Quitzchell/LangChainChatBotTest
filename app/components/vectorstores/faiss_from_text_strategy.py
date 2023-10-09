@@ -8,7 +8,11 @@ class FaissFromTextStrategy(VectorStore):
     def __init__(self, path: str, embeddings):
         raw_text = TextExtractor.extract_text_from_pdf(pdf_path=path)
         chunks = TextExtractor.chunk_text(raw_text=raw_text)
-        self.vectorstore = FAISS.from_texts(texts=chunks, embedding=embeddings)
+        self.vector_store = FAISS.from_texts(texts=chunks, embedding=embeddings)
 
     def as_retriever(self):
-        return self.vectorstore.as_retriever()
+        return self.vector_store.as_retriever()
+
+    def save_vectorstore(self, path: str):
+        self.vector_store.save_local(folder_path=path)
+
