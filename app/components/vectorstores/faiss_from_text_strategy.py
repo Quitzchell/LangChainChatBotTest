@@ -12,3 +12,7 @@ class FaissFromTextStrategy(VectorStore):
 
     def as_retriever(self):
         return self.vectorstore.as_retriever()
+
+    def save_vectorstore(self, path: str):
+        self.vectorstore.save_local(folder_path=path)
+
