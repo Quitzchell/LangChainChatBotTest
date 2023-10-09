@@ -12,7 +12,7 @@ if __name__ == "__main__":
     while True:
         if not chatbot:
             # todo: create component that let users select which chatbot they want to use for benchmarking
-            # Load the chatbot configuration
+            #   Load the chatbot configuration
             selected_bot = 'flan_t5-xxl_instructor-xl_faiss.json'
             script_dir = os.path.dirname(__file__)
             config_path = os.path.join(script_dir, 'app', 'configs', selected_bot)
@@ -27,6 +27,6 @@ if __name__ == "__main__":
         if question.lower() == 'exit':
             break
 
-        # Get the chatbot's answer
+        # Get the chatbots answer
         answer = chatbot.answer_question(question)
         print("Chatbot's Answer:", answer)

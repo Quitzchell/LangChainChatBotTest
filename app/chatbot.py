@@ -13,9 +13,9 @@ class Chatbot:
     def answer_question(self, question):
         # Logic to answer a question using the language model and vector store
         response = self.language_model.generate_response(question=question, vectorstore=self.vector_store)
-        self.context = response['chat_history']
 
         # todo: find out if this is useful for persisting chat history during a chat session
+        self.context = response['chat_history']
         # self.context['chat_history'].append(response['chat_history'])
 
 
