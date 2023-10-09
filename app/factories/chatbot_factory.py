@@ -18,8 +18,8 @@ class ChatbotFactory:
         embeddings = embeddings_class(model_name=config['embeddings']['model_name'])
 
         # Create vector store
-        if 'vector_path' in config:
-            path = config['vector_store']['vector_path']
+        if 'local_path' in config:
+            path = config['vector_store']['local_path']
             vector_store_strategy = config['vector_store']['local_strategy']
         else:
             path = config['vector_store']['pdf_path']
