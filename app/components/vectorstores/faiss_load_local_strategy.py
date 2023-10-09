@@ -5,7 +5,7 @@ from app.components.vectorstores.abstract.vectorStore import VectorStore
 
 class FaissLoadLocalStrategy(VectorStore):
     def __init__(self, path: str, embeddings):
-        self.vectorstore = FAISS.load_local(folder_path=path, embeddings=embeddings)
+        self.vector_store = FAISS.load_local(folder_path=path, embeddings=embeddings)
 
     def as_retriever(self):
-        return self.vectorstore.as_retriever()
+        return self.vector_store.as_retriever()

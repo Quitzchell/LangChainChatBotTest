@@ -11,12 +11,12 @@ class HuggingFaceHubLanguageModelStrategy(LanguageModel):
         self.llm = HuggingFaceHub(repo_id=model_name, model_kwargs={"temperature": 0.5, "max_length": 512})
 
     """Generate a response given the context and a user question."""
-    def generate_response(self, question: str, vectorstore: VectorStore):
+    def generate_response(self, question: str, vector_store: VectorStore):
         memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
 
         conversation_chain = ConversationalRetrievalChain.from_llm(
             llm=self.llm,
-            retriever=vectorstore.as_retriever(),
+            retriever=vector_store.as_retriever(),
             memory=memory
         )
 
