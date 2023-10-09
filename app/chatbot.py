@@ -1,6 +1,6 @@
 from app.components.embeddings.abstract.embeddings import Embeddings
 from app.components.language_models.huggingface_hub_language_model_strategy import HuggingFaceHubLanguageModelStrategy
-from app.components.vectorstores.faiss_from_text_vectorstore_strategy import VectorStore
+from app.components.vectorstores.faiss_from_text_strategy import VectorStore
 
 
 class Chatbot:
