@@ -2,7 +2,7 @@ import os
 
 from dotenv import load_dotenv
 
-from app.factories.chatbot_factory import ChatbotFactory
+from app.builders.chatbot_builder import ChatbotBuilder
 
 
 # todo: extract this an make it more extendable
@@ -35,7 +35,8 @@ if __name__ == "__main__":
             config_path = os.path.join(script_dir, 'app', 'configs', selected_bot)
 
             # Create the chatbot
-            chatbot = ChatbotFactory().create_chatbot(config_path=config_path)
+            builder = ChatbotBuilder(config_path=config_path)
+            chatbot = builder.build()
 
         # Ask for a question
         question = input("Type your question (type 'exit' to quit): ")
