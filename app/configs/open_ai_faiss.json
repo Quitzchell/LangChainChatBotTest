@@ -9,7 +9,7 @@
   },
   "vector_store": {
     "type": "FAISS",
-    "local_path": "docs/vectorstores/hboi_framework_vectorstore",
-    "local_strategy": "FaisLoadLocalStrategy"
+    "pdf_path": "docs/vectorstores/hboi_framework_vectorstore",
+    "local_strategy": "FaissLoadLocalStrategy"
   }
 }

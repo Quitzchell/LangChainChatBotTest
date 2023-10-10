@@ -35,7 +35,7 @@ class ChatbotBuilder:
             vector_store_strategy = self.config['vector_store']['local_strategy']
         else:
             path = self.config['vector_store']['pdf_path']
-            vector_store_strategy = self.config['vector_store']['pdf_strategy']
+            vector_store_strategy = self.config['vector_store']['local_strategy']
 
         vector_store_class = VectorStoreSelector().get_vectorstore(vector_store_strategy)
         return vector_store_class(path=path, embeddings=embeddings.get_embedding())
