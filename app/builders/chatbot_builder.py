@@ -18,7 +18,7 @@ class ChatbotBuilder:
         vector_store = self.create_vector_store(embeddings)
         language_model = self.create_language_model()
 
-        return Chatbot(language_model, embeddings, vector_store)
+        return Chatbot(language_model, vector_store)
 
     def load_config(self, config_path: str):
         with open(config_path, 'r') as file:
