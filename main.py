@@ -1,11 +1,16 @@
 import os
 
+import dotenv
 from dotenv import load_dotenv
 
 from app.builders.chatbot_builder import ChatbotBuilder
 
+# setting api keys as environment variables
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+HUGGINGFACEHUB_API_TOKEN = os.environ.get('HUGGINGFACEHUB_API_TOKEN')
 
-# todo: extract this an make it more extendable
+
+# todo: extract this and make it more extendable
 def select_bot():
     bot = None
     while bot not in ['1', '2']:
