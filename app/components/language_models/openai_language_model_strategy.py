@@ -10,7 +10,6 @@ class OpenAiLanguageModel(LanguageModel):
     def __init__(self, model_name: str, openai_key: int):
         self.llm = ChatOpenAI(api_key=openai_key, repo_id=model_name, model_kwargs={"temperature": 0.5})
 
-    """Generate a response given the context and a user question."""
     def generate_response(self, question: str, vector_store: VectorStore):
         memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
 
