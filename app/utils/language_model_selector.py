@@ -8,5 +8,5 @@ class LanguageModelSelector:
         "OpenAiLanguageModelStrategy": OpenAiLanguageModelStrategy
     }
 
-    def get_language_model_class(self, language_model_strategy: str):
-        return self.language_models[language_model_strategy]
+    def get_language_model_class(self, key: str):
+        return self.language_models[key]

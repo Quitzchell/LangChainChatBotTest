@@ -8,5 +8,5 @@ class VectorStoreSelector:
         'FaissLoadLocalStrategy': FaissLoadLocalStrategy
     }
 
-    def get_vectorstore(self, strategy: str):
-        return self.vectorStores[strategy]
+    def get_vectorstore(self, key: str):
+        return self.vectorStores[key]

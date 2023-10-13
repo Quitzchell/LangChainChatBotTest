@@ -8,5 +8,5 @@ class EmbeddingsSelector:
         'HuggingFaceEmbeddingsStrategy': HuggingFaceEmbeddingsStrategy,
     }
 
-    def get_embeddings_class(self, index: str):
-        return self.embeddings.get(index)
+    def get_embeddings_class(self, key: str):
+        return self.embeddings.get(key)
