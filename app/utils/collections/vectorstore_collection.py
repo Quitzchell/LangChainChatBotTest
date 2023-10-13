@@ -2,7 +2,7 @@ from app.components.vectorstores.faiss_from_text_strategy import FaissFromTextSt
 from app.components.vectorstores.faiss_load_local_strategy import FaissLoadLocalStrategy
 
 
-class VectorStoreSelector:
+class VectorStoreCollection:
     vectorStores = {
         'FaissFromTextStrategy': FaissFromTextStrategy,
         'FaissLoadLocalStrategy': FaissLoadLocalStrategy

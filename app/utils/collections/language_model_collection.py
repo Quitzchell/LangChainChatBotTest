@@ -2,7 +2,7 @@ from app.components.language_models.huggingface_hub_language_model_strategy impo
 from app.components.language_models.openai_language_model_strategy import OpenAiLanguageModelStrategy
 
 
-class LanguageModelSelector:
+class LanguageModelCollection:
     language_models = {
         "HuggingFaceHubLanguageModelStrategy": HuggingFaceHubLanguageModelStrategy,
         "OpenAiLanguageModelStrategy": OpenAiLanguageModelStrategy

@@ -2,7 +2,7 @@ from app.components.embeddings.huggingface_instruct_embeddings_strategy import H
 from app.components.embeddings.huggingface_embeddings_strategy import HuggingFaceEmbeddingsStrategy
 
 
-class EmbeddingsSelector:
+class EmbeddingsCollection:
     embeddings = {
         'HuggingfaceInstructEmbeddingsStrategy': HuggingfaceInstructEmbeddingsStrategy,
         'HuggingFaceEmbeddingsStrategy': HuggingFaceEmbeddingsStrategy,
