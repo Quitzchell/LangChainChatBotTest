@@ -13,4 +13,4 @@ class Chatbot:
 
         # todo: find out if we need to implement something to persist history
 
-        return response # response['answer'] does not work with OpenAI
+        return response
