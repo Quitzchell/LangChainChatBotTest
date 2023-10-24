@@ -7,11 +7,13 @@ from app.components.vectorstores.abstract.vectorStore import VectorStore
 from app.utils.collections.embeddings_collection import EmbeddingsCollection
 from app.utils.collections.language_model_collection import LanguageModelCollection
 from app.utils.collections.vectorstore_collection import VectorStoreCollection
+from app.utils.config_utils import ConfigUtils
 
 
 class ChatbotBuilder:
     def __init__(self, config_path: str):
-        self.config = self.load_config(config_path)
+        self.config_path = config_path
+        self.config = ConfigUtils.load_config(config_path)
 
     def build(self) -> Chatbot:
         embeddings = self.create_embeddings()
