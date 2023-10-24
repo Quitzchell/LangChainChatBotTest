@@ -1,17 +1,17 @@
 {
-  "language_model": {
-    "model_name": "google/flan-t5-xxl",
-    "strategy": "HuggingFaceHubLanguageModelStrategy"
-  },
-  "embeddings": {
-    "model_name": "hkunlp/instructor-xl",
-    "strategy": "HuggingfaceInstructEmbeddingsStrategy"
-  },
-  "vectorstore": {
-    "type": "FAISS",
-    "pdf_path": "docs/pdfs/hboi_framework.pdf",
-    "pdf_strategy": "FaissFromTextStrategy",
-    "local_path": "docs/vectorstores/FAISS/hboi_framework",
-    "local_strategy": "FaissLoadLocalStrategy"
-  }
+    "language_model": {
+        "model_name": "google/flan-t5-xxl",
+        "strategy": "HuggingFaceHubLanguageModelStrategy"
+    },
+    "embeddings": {
+        "model_name": "hkunlp/instructor-xl",
+        "strategy": "HuggingfaceInstructEmbeddingsStrategy"
+    },
+    "vectorstore": {
+        "type": "FAISS",
+        "pdf_path": "docs/pdfs/hboi_framework.pdf",
+        "pdf_strategy": "FaissFromTextStrategy",
+        "local_path": "docs/vectorstores/FAISS/hboi_framework",
+        "local_strategy": "FaissLoadLocalStrategy"
+    }
 }
