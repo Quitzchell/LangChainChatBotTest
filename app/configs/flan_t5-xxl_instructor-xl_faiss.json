@@ -9,9 +9,9 @@
   },
   "vectorstore": {
     "type": "FAISS",
-    "pdf_path": "docs/pdfs/hboi_kpi.pdf",
+    "pdf_path": "docs/pdfs/hboi_framework.pdf",
     "pdf_strategy": "FaissFromTextStrategy",
-    "local_path": "docs/vectorstores/FAISS/hboi_kpi",
+    "local_path": "docs/vectorstores/FAISS/hboi_framework",
     "local_strategy": "FaissLoadLocalStrategy"
   }
 }
