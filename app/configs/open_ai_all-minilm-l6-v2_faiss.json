@@ -7,9 +7,9 @@
     "model_name": "all-MiniLM-L6-v2",
     "strategy": "HuggingFaceEmbeddingsStrategy"
   },
-  "vector_store": {
+  "vectorstore": {
     "type": "FAISS",
-    "local_path": "docs/vectorstores/hboi_framework_vectorstore",
-    "local_strategy": "FaissLoadLocalStrategy"
+    "pdf_path": "docs/pdfs/hboi_framework.pdf",
+    "pdf_strategy": "FaissFromTextStrategy"
   }
 }

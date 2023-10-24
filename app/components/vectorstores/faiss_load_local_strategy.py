@@ -9,3 +9,6 @@ class FaissLoadLocalStrategy(VectorStore):
 
     def as_retriever(self):
         return self.vector_store.as_retriever()
+
+    def save(self, path: str):
+        self.vector_store.save_local(folder_path=path)

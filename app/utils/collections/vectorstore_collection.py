@@ -9,4 +9,4 @@ class VectorStoreCollection:
     }
 
     def get_vectorstore(self, key: str):
-        return self.vectorStores[key]
+        return self.vectorStores.get(key)

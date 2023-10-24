@@ -9,4 +9,4 @@ class LanguageModelCollection:
     }
 
     def get_language_model_class(self, key: str):
-        return self.language_models[key]
+        return self.language_models.get(key)

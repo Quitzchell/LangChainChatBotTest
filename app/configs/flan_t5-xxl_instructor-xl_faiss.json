@@ -7,9 +7,11 @@
     "model_name": "hkunlp/instructor-xl",
     "strategy": "HuggingfaceInstructEmbeddingsStrategy"
   },
-  "vector_store": {
+  "vectorstore": {
     "type": "FAISS",
-    "pdf_path": "docs/pdfs/hboi_kpi.pdf",
-    "pdf_strategy": "FaissFromTextStrategy"
+    "pdf_path": "docs/pdfs/hboi_framework.pdf",
+    "pdf_strategy": "FaissFromTextStrategy",
+    "local_path": "docs/vectorstores/FAISS/hboi_framework",
+    "local_strategy": "FaissLoadLocalStrategy"
   }
 }
